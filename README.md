@@ -1,7 +1,7 @@
 MediaKeys
 =========
 
-[![Swift 3.0](https://img.shields.io/badge/Swift-3.0-orange.svg?style=flat)](https://developer.apple.com/swift/)
+[![Swift 5.0](https://img.shields.io/badge/Swift-5.0-orange.svg?style=flat)](https://developer.apple.com/swift/)
 [![Platforms macOS](https://img.shields.io/badge/Platforms-macOS-lightgray.svg?style=flat)](http://www.apple.com/macos/)
 [![License Apache](https://img.shields.io/badge/License-APACHE2-blue.svg?style=flat)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
@@ -15,7 +15,7 @@ In addition to monitoring key presses, the MediaKeys framework can intercept the
 
 Example
 -------
-MediaKeys is used in the [AirBass](https://github.com/jenghis/airbass) app.
+MediaKeys is used in the [AirBass](https://github.com/jgferrer/airbass) app.
 
 Instructions
 ------------
