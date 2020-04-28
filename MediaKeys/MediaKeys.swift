@@ -39,7 +39,7 @@ public class MediaKeys: NSObject, EventTapDelegate {
         self.delegate = delegate
         super.init()
         loadWhitelist()
-        observeApplicationEvents()
+        //observeApplicationEvents()
         createEventTap()
     }
 
@@ -51,7 +51,7 @@ public class MediaKeys: NSObject, EventTapDelegate {
             appWhitelist.formUnion(apps)
         }
     }
-
+/*
     private func observeApplicationEvents() {
         let center = NSWorkspace.shared().notificationCenter
         center.addObserver(self,
@@ -63,7 +63,7 @@ public class MediaKeys: NSObject, EventTapDelegate {
                            name: .NSWorkspaceDidTerminateApplication,
                            object: nil)
     }
-
+*/
     private func createEventTap() {
         let systemEvents: CGEventMask = 16384  // not defined in public API
         eventTap = EventTap(delegate: self, eventsOfInterest: systemEvents)
@@ -90,7 +90,7 @@ public class MediaKeys: NSObject, EventTapDelegate {
 
     private func getIdentifier(for notification: Notification) -> String? {
         guard let userInfo = notification.userInfo else { return nil }
-        guard let app = userInfo[NSWorkspaceApplicationKey] as?
+        guard let app = userInfo[NSWorkspace.applicationUserInfoKey] as?
             NSRunningApplication else { return nil }
         return app.bundleIdentifier
     }
