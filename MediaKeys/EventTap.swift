@@ -19,9 +19,9 @@ class EventTap {
 
     init(delegate: EventTapDelegate, eventsOfInterest: CGEventMask) {
         self.delegate = delegate
-        beginObservingEvents(withMask: eventsOfInterest)
+        //beginObservingEvents(withMask: eventsOfInterest)
     }
-
+/*
     private func beginObservingEvents(withMask mask: CGEventMask) {
         let tapPointer = UnsafeMutableRawPointer(
             Unmanaged.passUnretained(self).toOpaque())
@@ -35,7 +35,7 @@ class EventTap {
                                                    eventPort, 0)
         CFRunLoopAddSource(CFRunLoopGetCurrent(), source, .commonModes)
     }
-
+*/
     private let callback: CGEventTapCallBack = { (proxy, type, event, refcon) in
         let tap = Unmanaged<EventTap>.fromOpaque(refcon!).takeUnretainedValue()
         if tap.delegate.eventTap(tap, shouldIntercept: event) {
