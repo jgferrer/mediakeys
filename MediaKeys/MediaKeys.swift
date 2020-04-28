@@ -39,7 +39,7 @@ public class MediaKeys: NSObject, EventTapDelegate {
         self.delegate = delegate
         super.init()
         loadWhitelist()
-        //observeApplicationEvents()
+        observeApplicationEvents()
         createEventTap()
     }
 
@@ -51,19 +51,19 @@ public class MediaKeys: NSObject, EventTapDelegate {
             appWhitelist.formUnion(apps)
         }
     }
-/*
+
     private func observeApplicationEvents() {
-        let center = NSWorkspace.shared().notificationCenter
+        let center = NSWorkspace.shared.notificationCenter
         center.addObserver(self,
                            selector: #selector(applicationDidActivate(_:)),
-                           name: .NSWorkspaceDidActivateApplication,
+                           name: NSWorkspace.didActivateApplicationNotification,
                            object: nil)
         center.addObserver(self,
                            selector: #selector(applicationDidTerminate(_:)),
-                           name: .NSWorkspaceDidTerminateApplication,
+                           name: NSWorkspace.didTerminateApplicationNotification,
                            object: nil)
     }
-*/
+
     private func createEventTap() {
         let systemEvents: CGEventMask = 16384  // not defined in public API
         eventTap = EventTap(delegate: self, eventsOfInterest: systemEvents)
@@ -83,7 +83,7 @@ public class MediaKeys: NSObject, EventTapDelegate {
     private func handleNotification(_ notification: Notification) {
         guard let identifier = getIdentifier(for: notification) else { return }
         guard appWhitelist.contains(identifier) else { return }
-        if let index = runningApps.index(of: identifier) {
+        if let index = runningApps.firstIndex(of: identifier) {
             runningApps.remove(at: index)
         }
     }

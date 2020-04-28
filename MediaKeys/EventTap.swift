@@ -19,23 +19,33 @@ class EventTap {
 
     init(delegate: EventTapDelegate, eventsOfInterest: CGEventMask) {
         self.delegate = delegate
-        //beginObservingEvents(withMask: eventsOfInterest)
+        beginObservingEvents(withMask: eventsOfInterest)
     }
-/*
+    
     private func beginObservingEvents(withMask mask: CGEventMask) {
         let tapPointer = UnsafeMutableRawPointer(
             Unmanaged.passUnretained(self).toOpaque())
-        let eventPort = CGEvent.tapCreate(tap: .cgSessionEventTap,
-                                          place: .headInsertEventTap,
-                                          options: .defaultTap,
-                                          eventsOfInterest: mask,
-                                          callback: callback,
-                                          userInfo: tapPointer)
-        let source = CFMachPortCreateRunLoopSource(kCFAllocatorSystemDefault,
-                                                   eventPort, 0)
-        CFRunLoopAddSource(CFRunLoopGetCurrent(), source, .commonModes)
+        
+        let trusted = kAXTrustedCheckOptionPrompt.takeUnretainedValue()
+        let privOptions = [trusted: true] as CFDictionary
+        let accessEnabled = AXIsProcessTrustedWithOptions(privOptions)
+
+        if accessEnabled == true {
+            let eventPort = CGEvent.tapCreate(tap: .cgSessionEventTap,
+                                              place: .headInsertEventTap,
+                                              options: .defaultTap,
+                                              eventsOfInterest: mask,
+                                              callback: callback,
+                                              userInfo: tapPointer)
+            let source = CFMachPortCreateRunLoopSource(kCFAllocatorSystemDefault,
+                                                       eventPort, 0)
+            CFRunLoopAddSource(CFRunLoopGetCurrent(), source, .commonModes)
+        } else {
+
+        }
+        
     }
-*/
+
     private let callback: CGEventTapCallBack = { (proxy, type, event, refcon) in
         let tap = Unmanaged<EventTap>.fromOpaque(refcon!).takeUnretainedValue()
         if tap.delegate.eventTap(tap, shouldIntercept: event) {
